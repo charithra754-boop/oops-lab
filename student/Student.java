@@ -1,31 +1,16 @@
 package student;
 
 public class Student {
-    String usn;
-    String deptName;
-    int[] grades = new int[3];
-    double sgpa;
+    String usn, dept;
+    int g1, g2, g3;
 
-    public Student(String usn, String deptName, int g1, int g2, int g3) {
-        this.usn = usn;
-        this.deptName = deptName;
-        this.grades[0] = g1;
-        this.grades[1] = g2;
-        this.grades[2] = g3;
-        calculateSGPA();
-    }
-
-    private void calculateSGPA() {
-        // Simplified SGPA calc: Average / 10
-        double total = grades[0] + grades[1] + grades[2];
-        this.sgpa = (total / 3) / 10; 
+    public Student(String u, String d, int a, int b, int c) {
+        usn = u; dept = d; g1 = a; g2 = b; g3 = c;
     }
 
     public void display() {
-        System.out.println("\n--- 🎓 Student Profile 🎓 ---");
-        System.out.println("USN: " + usn);
-        System.out.println("Department: " + deptName);
-        System.out.println("Grades: " + grades[0] + ", " + grades[1] + ", " + grades[2]);
-        System.out.printf("SGPA: %.2f\n", sgpa);
+        System.out.println("\n--- 🎓 Student: " + usn + " ---");
+        // Simple SGPA logic: Average of grades / 10.
+        System.out.printf("Dept: %s | Grades: %d %d %d | SGPA: %.2f\n", dept, g1, g2, g3, (g1+g2+g3)/30.0);
     }
 }

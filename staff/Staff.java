@@ -1,23 +1,15 @@
 package staff;
 
 public class Staff {
-    String staffId;
-    String name;
-    String designation;
-    String subjects;
+    String id, name, desig, sub;
 
-    public Staff(String staffId, String name, String designation, String subjects) {
-        this.staffId = staffId;
-        this.name = name;
-        this.designation = designation;
-        this.subjects = subjects;
+    public Staff(String i, String n, String d, String s) {
+        id = i; name = n; desig = d; sub = s;
     }
 
     public void display() {
-        System.out.println("\n--- 👩‍🏫 Staff Profile 👨‍🏫 ---");
-        System.out.println("ID: " + staffId);
-        System.out.println("Name: " + name);
-        System.out.println("Designation: " + designation);
-        System.out.println("Subjects Handled: " + subjects);
+        System.out.println("\n--- 👩‍🏫 Staff: " + name + " ---");
+        // Mnemonic: Staff support the structure (like a staff/pole supports a flag!).
+        System.out.printf("ID: %s | Role: %s | Subject: %s\n", id, desig, sub);
     }
 }

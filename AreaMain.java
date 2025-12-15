@@ -2,30 +2,20 @@ import java.util.Scanner;
 
 public class AreaMain {
     public static void main(String[] args) {
-        System.out.println("--- 📐 Geometry Area Calculator 📐 ---");
-        // Fun Fact: Triangles are the strongest shape! That's why bridges are made of them.
-        
+        System.out.println("--- 📐 Shape Calculator 📐 ---");
+        // Fun Fact: A hexagon is the most efficient shape for packing (bees know this!).
+
         Scanner sc = new Scanner(System.in);
+
+        // Quick input handling
+        System.out.print("Rect (L W): ");
+        Shape rect = new Rectangle(sc.nextDouble(), sc.nextDouble());
         
-        // Rectangle
-        System.out.println("\nRectangle:");
-        System.out.print("Enter Length: ");
-        double len = sc.nextDouble();
-        System.out.print("Enter Width: ");
-        double wid = sc.nextDouble();
-        
-        Rectangle rect = new Rectangle(len, wid);
-        System.out.println("Area of Rectangle: " + rect.calculateArea());
-        
-        // Triangle
-        System.out.println("\nTriangle:");
-        System.out.print("Enter Base: ");
-        double base = sc.nextDouble();
-        System.out.print("Enter Height: ");
-        double height = sc.nextDouble();
-        
-        Triangle tri = new Triangle(base, height);
-        System.out.println("Area of Triangle: " + tri.calculateArea());
+        System.out.print("Tri (B H): ");
+        Shape tri = new Triangle(sc.nextDouble(), sc.nextDouble());
+
+        System.out.println("Rect Area: " + rect.calculateArea());
+        System.out.println("Tri Area : " + tri.calculateArea());
         
         sc.close();
     }

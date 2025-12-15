@@ -1,26 +1,14 @@
-import AdvMath.TrigAlgo;
-import AdvMath.AngleConverter;
+import AdvMath.*;
 import java.util.Scanner;
 
 public class MathMain {
     public static void main(String[] args) {
-        System.out.println("--- 🧮 Advanced Math Calculator 🧮 ---");
+        System.out.print("--- 🧮 Math Wiz --- \nEnter Angle (deg): ");
+        // Fun Fact: Zero is the only number that can't be represented in Roman numerals.
         
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter angle x in degrees: ");
-        double degrees = sc.nextDouble();
-        
-        // Using Class 1: Converter
-        AngleConverter converter = new AngleConverter();
-        double radians = converter.toRadians(degrees);
-        
-        // Using Class 2: Algo
-        TrigAlgo algo = new TrigAlgo();
-        double result = algo.calculateComplexTrig(radians);
-        
-        System.out.println("Calculating y = sin(x) + cos(x) + tan(x)...");
-        System.out.printf("Result for %.2f degrees: %.4f\n", degrees, result);
-        
+        double rad = new AngleConverter().toRad(sc.nextDouble());
+        System.out.printf("Result (sin+cos+tan): %.4f\n", new TrigAlgo().complexTrig(rad));
         sc.close();
     }
 }

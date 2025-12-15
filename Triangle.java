@@ -1,15 +1,10 @@
 public class Triangle implements Shape {
-    double base;
-    double height;
+    double b, h; // Base, Height
 
-    public Triangle(double base, double height) {
-        this.base = base;
-        this.height = height;
-    }
+    public Triangle(double b, double h) { this.b = b; this.h = h; }
 
     @Override
     public double calculateArea() {
-        // Area of Triangle = 0.5 * base * height
-        return 0.5 * base * height;
+        return 0.5 * b * h; // Area = 1/2 * base * height
     }
 }

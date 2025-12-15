@@ -1,15 +1,10 @@
 public class Rectangle implements Shape {
-    double length;
-    double width;
+    double l, w; // Length, Width
 
-    public Rectangle(double length, double width) {
-        this.length = length;
-        this.width = width;
-    }
+    public Rectangle(double l, double w) { this.l = l; this.w = w; }
 
     @Override
     public double calculateArea() {
-        // Area of Rectangle = l * w
-        return length * width;
+        return l * w; // Area = length * width
     }
 }

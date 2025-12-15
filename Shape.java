@@ -1,4 +1,4 @@
 public interface Shape {
-    // Fun Fact: The word 'geometry' comes from the Greek words 'geo' (earth) and 'metron' (measurement).
+    // Mnemonic: Shapes need structure, interfaces provide the blueprint!
     double calculateArea();
 }
