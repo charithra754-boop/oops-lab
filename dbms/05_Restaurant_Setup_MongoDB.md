@@ -7,96 +7,96 @@ use restaurant_db
 
 db.restaurant.drop()
 
-db.restaurant.insertMany([
+db.restaurant.insertmany([
   {
     id: 1,
-    name: "Truffles",
-    cuisine: "American",
-    address: { building: "123", street: "St Marks Road", area: "CBD", pincode: "560001", city: "Bangalore" },
-    nearby_landmarks: ["Museum", "Metro"],
+    name: "truffles",
+    cuisine: "american",
+    address: { building: "123", street: "st marks road", area: "cbd", pincode: "560001", city: "bangalore" },
+    nearby_landmarks: ["museum", "metro"],
     online_delivery: "yes",
-    famous_for: "Burgers"
+    famous_for: "burgers"
   },
   {
     id: 2,
-    name: "Empire",
-    cuisine: "North Indian Thali",
-    address: { building: "456", street: "Church Street", area: "CBD", pincode: "560001", city: "Bangalore" },
-    nearby_landmarks: ["Metro Station"],
+    name: "empire",
+    cuisine: "north indian thali",
+    address: { building: "456", street: "church street", area: "cbd", pincode: "560001", city: "bangalore" },
+    nearby_landmarks: ["metro station"],
     online_delivery: "yes",
-    famous_for: "Ghee Rice"
+    famous_for: "ghee rice"
   },
   {
     id: 3,
-    name: "Chianti",
-    cuisine: "Italian",
-    address: { building: "789", street: "Indiranagar", area: "12th Main", pincode: "560038", city: "Bangalore" },
-    nearby_landmarks: ["Park"],
+    name: "chianti",
+    cuisine: "italian",
+    address: { building: "789", street: "indiranagar", area: "12th main", pincode: "560038", city: "bangalore" },
+    nearby_landmarks: ["park"],
     online_delivery: "no",
-    famous_for: "Pasta"
+    famous_for: "pasta"
   },
   {
     id: 4,
-    name: "Meghana Foods",
-    cuisine: "Andhra",
-    address: { building: "101", street: "Koramangala", area: "5th Block", pincode: "560095", city: "Bangalore" },
-    nearby_landmarks: ["Forum Mall"],
+    name: "meghana foods",
+    cuisine: "andhra",
+    address: { building: "101", street: "koramangala", area: "5th block", pincode: "560095", city: "bangalore" },
+    nearby_landmarks: ["forum mall"],
     online_delivery: "yes",
-    famous_for: "Biryani"
+    famous_for: "biryani"
   },
   {
     id: 5,
-    name: "Little Italy",
-    cuisine: "Italian",
-    address: { building: "202", street: "Indiranagar", area: "100ft Road", pincode: "560038", city: "Bangalore" },
-    nearby_landmarks: ["Starbucks"],
+    name: "little italy",
+    cuisine: "italian",
+    address: { building: "202", street: "indiranagar", area: "100ft road", pincode: "560038", city: "bangalore" },
+    nearby_landmarks: ["starbucks"],
     online_delivery: "yes",
-    famous_for: "Pizza"
+    famous_for: "pizza"
   },
   {
     id: 6,
-    name: "Nagarjuna",
-    cuisine: "Andhra",
-    address: { building: "303", street: "Residency Road", area: "CBD", pincode: "560025", city: "Bangalore" },
-    nearby_landmarks: ["Galaxy Theatre"],
+    name: "nagarjuna",
+    cuisine: "andhra",
+    address: { building: "303", street: "residency road", area: "cbd", pincode: "560025", city: "bangalore" },
+    nearby_landmarks: ["galaxy theatre"],
     online_delivery: "yes",
-    famous_for: "Meals"
+    famous_for: "meals"
   },
   {
     id: 7,
-    name: "Toit",
-    cuisine: "Continental",
-    address: { building: "404", street: "Indiranagar", area: "100ft Road", pincode: "560038", city: "Bangalore" },
-    nearby_landmarks: ["Metro"],
+    name: "toit",
+    cuisine: "continental",
+    address: { building: "404", street: "indiranagar", area: "100ft road", pincode: "560038", city: "bangalore" },
+    nearby_landmarks: ["metro"],
     online_delivery: "no",
-    famous_for: "Pizza"
+    famous_for: "pizza"
   },
   {
     id: 8,
-    name: "Gramin",
-    cuisine: "North Indian Thali",
-    address: { building: "505", street: "Koramangala", area: "7th Block", pincode: "560095", city: "Bangalore" },
-    nearby_landmarks: ["Raheja Arcade"],
+    name: "gramin",
+    cuisine: "north indian thali",
+    address: { building: "505", street: "koramangala", area: "7th block", pincode: "560095", city: "bangalore" },
+    nearby_landmarks: ["raheja arcade"],
     online_delivery: "yes",
-    famous_for: "Roti"
+    famous_for: "roti"
   },
   {
     id: 9,
-    name: "Corner House",
-    cuisine: "Desserts",
-    address: { building: "606", street: "Indiranagar", area: "12th Main", pincode: "560038", city: "Bangalore" },
-    nearby_landmarks: ["School"],
+    name: "corner house",
+    cuisine: "desserts",
+    address: { building: "606", street: "indiranagar", area: "12th main", pincode: "560038", city: "bangalore" },
+    nearby_landmarks: ["school"],
     online_delivery: "yes",
-    famous_for: "DBC"
+    famous_for: "dbc"
   },
   {
     id: 10,
-    name: "MTR",
-    cuisine: "South Indian",
-    address: { building: "707", street: "Lalbagh Road", area: "Mavalli", pincode: "560004", city: "Bangalore" },
-    nearby_landmarks: ["Lalbagh"],
+    name: "mtr",
+    cuisine: "south indian",
+    address: { building: "707", street: "lalbagh road", area: "mavalli", pincode: "560004", city: "bangalore" },
+    nearby_landmarks: ["lalbagh"],
     online_delivery: "yes",
-    famous_for: "Dosa"
+    famous_for: "dosa"
   }
 ]);
 ```

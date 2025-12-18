@@ -3,27 +3,27 @@
 ## Part A: Car Ownership Database
 
 ### 📋 Schema
-- **PERSON** (driver_id, name, address)
-- **CAR** (Regno, model, year)
-- **OWNS** (driver_id, Regno)
+- **person** (driver_id, name, address)
+- **car** (regno, model, year)
+- **owns** (driver_id, regno)
 
 ### 🔍 Query
-**1. Display the number of cars owned by each driver.**
+**1. display the number of cars owned by each driver.**
 
-**Option 1: Using `COUNT`**
+**option 1: using `count`**
 ```sql
-SELECT P.name, COUNT(O.Regno) as Car_Count
-FROM PERSON P
-JOIN OWNS O ON P.driver_id = O.driver_id
-GROUP BY P.driver_id, P.name;
+select p.name, count(o.regno) as car_count
+from person p
+join owns o on p.driver_id = o.driver_id
+group by p.driver_id, p.name;
 ```
 
-**Option 2: Left Join (To show drivers with 0 cars too)**
+**option 2: left join (to show drivers with 0 cars too)**
 ```sql
-SELECT P.name, COUNT(O.Regno) as Car_Count
-FROM PERSON P
-LEFT JOIN OWNS O ON P.driver_id = O.driver_id
-GROUP BY P.driver_id, P.name;
+select p.name, count(o.regno) as car_count
+from person p
+left join owns o on p.driver_id = o.driver_id
+group by p.driver_id, p.name;
 ```
 
 ---
@@ -31,45 +31,45 @@ GROUP BY P.driver_id, P.name;
 ## Part B: Airline Database
 
 ### 📋 Schema
-- **AIRCRAFT** (Aircraft_ID, Aircraft_name, Cruising_range)
-- **CERTIFIED** (Emp_ID, Aircraft_ID)
-- **EMPLOYEE** (Emp_ID, Ename, Salary)
+- **aircraft** (aircraft_id, aircraft_name, cruising_range)
+- **certified** (emp_id, aircraft_id)
+- **employee** (emp_id, ename, salary)
 
 ### 🔍 Queries
 
-**1. Find the employee ID's of employees who make the highest salary.**
+**1. find the employee id's of employees who make the highest salary.**
 
-**Option 1: Subquery**
+**option 1: subquery**
 ```sql
-SELECT Emp_ID 
-FROM EMPLOYEE 
-WHERE Salary = (SELECT MAX(Salary) FROM EMPLOYEE);
+select emp_id 
+from employee 
+where salary = (select max(salary) from employee);
 ```
 
-**Option 2: Limit/Top (DB Dependent)**
+**option 2: limit/top (db dependent)**
 ```sql
-SELECT Emp_ID 
-FROM EMPLOYEE 
-ORDER BY Salary DESC 
-LIMIT 1; 
--- Note: This only returns ONE person. If there's a tie, the subquery version is safer!
+select emp_id 
+from employee 
+order by salary desc 
+limit 1; 
+-- note: this only returns one person. if there's a tie, the subquery version is safer!
 ```
 
-**2. Find the employees who are not certified to operate any aircraft.**
+**2. find the employees who are not certified to operate any aircraft.**
 
-**Option 1: `NOT IN`**
+**option 1: `not in`**
 ```sql
-SELECT E.Ename 
-FROM EMPLOYEE E
-WHERE E.Emp_ID NOT IN (SELECT DISTINCT Emp_ID FROM CERTIFIED);
+select e.ename 
+from employee e
+where e.emp_id not in (select distinct emp_id from certified);
 ```
 
-**Option 2: `LEFT JOIN` ... `NULL`**
+**option 2: `left join` ... `null`**
 ```sql
-SELECT E.Ename 
-FROM EMPLOYEE E
-LEFT JOIN CERTIFIED C ON E.Emp_ID = C.Emp_ID
-WHERE C.Aircraft_ID IS NULL;
+select e.ename 
+from employee e
+left join certified c on e.emp_id = c.emp_id
+where c.aircraft_id is null;
 ```
 
-> **🏁 Finish Line:** The `LEFT JOIN ... WHERE NULL` pattern is a high-performance alternative to `NOT IN`, especially in older SQL engines or with massive datasets. It basically asks: "Try to match employees to certifications. Now, show me the rows where the match failed."
+> **🏁 finish line:** the `left join ... where null` pattern is a high-performance alternative to `not in`, especially in older sql engines or with massive datasets. it basically asks: "try to match employees to certifications. now, show me the rows where the match failed."

@@ -1,105 +1,105 @@
 # 📚 Program 1: Library Database Setup
 
 ## 🔄 Order of Creation
-1. `PUBLISHER`
-2. `LIBRARY_BRANCH`
-3. `BOOK` (Depends on `PUBLISHER`)
-4. `BOOK_AUTHORS` (Depends on `BOOK`)
-5. `BOOK_COPIES` (Depends on `BOOK`, `LIBRARY_BRANCH`)
-6. `BOOK_LENDING` (Depends on `BOOK`, `LIBRARY_BRANCH`)
+1. `publisher`
+2. `library_branch`
+3. `book` (depends on `publisher`)
+4. `book_authors` (depends on `book`)
+5. `book_copies` (depends on `book`, `library_branch`)
+6. `book_lending` (depends on `book`, `library_branch`)
 
 ## 🛠️ Table Creation
 
 ```sql
-CREATE TABLE PUBLISHER (
-    Name VARCHAR(100) PRIMARY KEY,
-    Address VARCHAR(255),
-    Phone VARCHAR(20)
+create table publisher (
+    name varchar(100) primary key,
+    address varchar(255),
+    phone varchar(20)
 );
 
-CREATE TABLE LIBRARY_BRANCH (
-    Branch_id INT PRIMARY KEY,
-    Branch_Name VARCHAR(100),
-    Address VARCHAR(255)
+create table library_branch (
+    branch_id int primary key,
+    branch_name varchar(100),
+    address varchar(255)
 );
 
-CREATE TABLE BOOK (
-    Book_id INT PRIMARY KEY,
-    Title VARCHAR(255),
-    Publisher_Name VARCHAR(100),
-    Pub_Year INT,
-    FOREIGN KEY (Publisher_Name) REFERENCES PUBLISHER(Name) ON DELETE CASCADE
+create table book (
+    book_id int primary key,
+    title varchar(255),
+    publisher_name varchar(100),
+    pub_year int,
+    foreign key (publisher_name) references publisher(name) on delete cascade
 );
 
-CREATE TABLE BOOK_AUTHORS (
-    Book_id INT,
-    Author_Name VARCHAR(100),
-    PRIMARY KEY (Book_id, Author_Name),
-    FOREIGN KEY (Book_id) REFERENCES BOOK(Book_id) ON DELETE CASCADE
+create table book_authors (
+    book_id int,
+    author_name varchar(100),
+    primary key (book_id, author_name),
+    foreign key (book_id) references book(book_id) on delete cascade
 );
 
-CREATE TABLE BOOK_COPIES (
-    Book_id INT,
-    Branch_id INT,
-    No_of_Copies INT,
-    PRIMARY KEY (Book_id, Branch_id),
-    FOREIGN KEY (Book_id) REFERENCES BOOK(Book_id) ON DELETE CASCADE,
-    FOREIGN KEY (Branch_id) REFERENCES LIBRARY_BRANCH(Branch_id) ON DELETE CASCADE
+create table book_copies (
+    book_id int,
+    branch_id int,
+    no_of_copies int,
+    primary key (book_id, branch_id),
+    foreign key (book_id) references book(book_id) on delete cascade,
+    foreign key (branch_id) references library_branch(branch_id) on delete cascade
 );
 
-CREATE TABLE BOOK_LENDING (
-    Book_id INT,
-    Branch_id INT,
-    Card_No INT,
-    Date_Out DATE,
-    Due_Date DATE,
-    PRIMARY KEY (Book_id, Branch_id, Card_No),
-    FOREIGN KEY (Book_id) REFERENCES BOOK(Book_id) ON DELETE CASCADE,
-    FOREIGN KEY (Branch_id) REFERENCES LIBRARY_BRANCH(Branch_id) ON DELETE CASCADE
+create table book_lending (
+    book_id int,
+    branch_id int,
+    card_no int,
+    date_out date,
+    due_date date,
+    primary key (book_id, branch_id, card_no),
+    foreign key (book_id) references book(book_id) on delete cascade,
+    foreign key (branch_id) references library_branch(branch_id) on delete cascade
 );
 ```
 
 ## 📥 Data Insertion
 
 ```sql
--- 1. Publishers
-INSERT INTO PUBLISHER VALUES ('Pearson', 'New York', '9875462530');
-INSERT INTO PUBLISHER VALUES ('McGraw Hill', 'California', '9875462531');
-INSERT INTO PUBLISHER VALUES ('Sapna', 'Bangalore', '9875462532');
+-- 1. publishers
+insert into publisher values ('pearson', 'new york', '9875462530');
+insert into publisher values ('mcgraw hill', 'california', '9875462531');
+insert into publisher values ('sapna', 'bangalore', '9875462532');
 
--- 2. Branches
-INSERT INTO LIBRARY_BRANCH VALUES (10, 'Main Branch', 'Bangalore');
-INSERT INTO LIBRARY_BRANCH VALUES (11, 'City Branch', 'Mysore');
-INSERT INTO LIBRARY_BRANCH VALUES (12, 'Campus Branch', 'Mangalore');
+-- 2. branches
+insert into library_branch values (10, 'main branch', 'bangalore');
+insert into library_branch values (11, 'city branch', 'mysore');
+insert into library_branch values (12, 'campus branch', 'mangalore');
 
--- 3. Books
-INSERT INTO BOOK VALUES (101, 'DBMS', 'Pearson', 2017);
-INSERT INTO BOOK VALUES (102, 'Operating Systems', 'McGraw Hill', 2016);
-INSERT INTO BOOK VALUES (103, 'Networks', 'Pearson', 2018);
-INSERT INTO BOOK VALUES (104, 'Algorithms', 'Sapna', 2019);
-INSERT INTO BOOK VALUES (105, 'Java', 'McGraw Hill', 2015);
+-- 3. books
+insert into book values (101, 'dbms', 'pearson', 2017);
+insert into book values (102, 'operating systems', 'mcgraw hill', 2016);
+insert into book values (103, 'networks', 'pearson', 2018);
+insert into book values (104, 'algorithms', 'sapna', 2019);
+insert into book values (105, 'java', 'mcgraw hill', 2015);
 
--- 4. Authors
-INSERT INTO BOOK_AUTHORS VALUES (101, 'Navathe');
-INSERT INTO BOOK_AUTHORS VALUES (102, 'Galvin');
-INSERT INTO BOOK_AUTHORS VALUES (103, 'Tanenbaum');
-INSERT INTO BOOK_AUTHORS VALUES (104, 'Cormen');
-INSERT INTO BOOK_AUTHORS VALUES (105, 'Herbert Schildt');
+-- 4. authors
+insert into book_authors values (101, 'navathe');
+insert into book_authors values (102, 'galvin');
+insert into book_authors values (103, 'tanenbaum');
+insert into book_authors values (104, 'cormen');
+insert into book_authors values (105, 'herbert schildt');
 
--- 5. Book Copies
-INSERT INTO BOOK_COPIES VALUES (101, 10, 10);
-INSERT INTO BOOK_COPIES VALUES (101, 11, 5);
-INSERT INTO BOOK_COPIES VALUES (102, 10, 8);
-INSERT INTO BOOK_COPIES VALUES (102, 11, 2);
-INSERT INTO BOOK_COPIES VALUES (103, 12, 15);
+-- 5. book copies
+insert into book_copies values (101, 10, 10);
+insert into book_copies values (101, 11, 5);
+insert into book_copies values (102, 10, 8);
+insert into book_copies values (102, 11, 2);
+insert into book_copies values (103, 12, 15);
 
--- 6. Lending (Note: Dates chosen to satisfy query #2: Jan 2017 - Jun 2017)
--- Card 1 has > 3 books in the range
-INSERT INTO BOOK_LENDING VALUES (101, 10, 1, '2017-01-15', '2017-02-15');
-INSERT INTO BOOK_LENDING VALUES (102, 10, 1, '2017-02-20', '2017-03-20');
-INSERT INTO BOOK_LENDING VALUES (103, 11, 1, '2017-03-10', '2017-04-10');
-INSERT INTO BOOK_LENDING VALUES (104, 11, 1, '2017-04-05', '2017-05-05'); 
+-- 6. lending (note: dates chosen to satisfy query #2: jan 2017 - jun 2017)
+-- card 1 has > 3 books in the range
+insert into book_lending values (101, 10, 1, '2017-01-15', '2017-02-15');
+insert into book_lending values (102, 10, 1, '2017-02-20', '2017-03-20');
+insert into book_lending values (103, 11, 1, '2017-03-10', '2017-04-10');
+insert into book_lending values (104, 11, 1, '2017-04-05', '2017-05-05'); 
 
--- Card 2 has < 3 books
-INSERT INTO BOOK_LENDING VALUES (101, 10, 2, '2017-01-10', '2017-02-10');
+-- card 2 has < 3 books
+insert into book_lending values (101, 10, 2, '2017-01-10', '2017-02-10');
 ```

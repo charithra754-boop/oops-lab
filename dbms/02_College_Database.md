@@ -1,13 +1,13 @@
 # 🎓 Program 2: College Database (SQL)
 
-**The Vibe:** Students, marks, and the dreaded "Final IA" calculation.
+**the vibe:** students, marks, and the dreaded "final ia" calculation.
 
 ## 📋 Schema
-- **STUDENT** (USN, SName, Address, Phone, Gender)
-- **SEMSEC** (SSID, Sem, Sec)
-- **CLASS** (USN, SSID)
-- **SUBJECT** (Subcode, Title, Sem, Credits)
-- **IAMARKS** (USN, Subcode, SSID, Test1, Test2, Test3, FinalIA)
+- **student** (usn, sname, address, phone, gender)
+- **semsec** (ssid, sem, sec)
+- **class** (usn, ssid)
+- **subject** (subcode, title, sem, credits)
+- **iamarks** (usn, subcode, ssid, test1, test2, test3, finalia)
 
 ---
 
@@ -15,22 +15,22 @@
 
 ### 1. List all the student details studying in the fourth semester ‘C’ section.
 
-**Option 1: Simple Join**
+**option 1: simple join**
 ```sql
-SELECT S.* 
-FROM STUDENT S
-JOIN CLASS C ON S.USN = C.USN
-JOIN SEMSEC SS ON C.SSID = SS.SSID
-WHERE SS.Sem = 4 AND SS.Sec = 'C';
+select s.* 
+from student s
+join class c on s.usn = c.usn
+join semsec ss on c.ssid = ss.ssid
+where ss.sem = 4 and ss.sec = 'c';
 ```
 
-**Option 2: Subquery (The "Inside-Out" approach)**
+**option 2: subquery (the "inside-out" approach)**
 ```sql
-SELECT * FROM STUDENT 
-WHERE USN IN (
-    SELECT USN FROM CLASS 
-    WHERE SSID IN (
-        SELECT SSID FROM SEMSEC WHERE Sem = 4 AND Sec = 'C'
+select * from student 
+where usn in (
+    select usn from class 
+    where ssid in (
+        select ssid from semsec where sem = 4 and sec = 'c'
     )
 );
 ```
@@ -39,65 +39,65 @@ WHERE USN IN (
 
 ### 2. Compute the total number of male and female students in each semester and in each section.
 
-**The Goal:** Multi-level Grouping.
+**the goal:** multi-level grouping.
 
-**The Query:**
+**the query:**
 ```sql
-SELECT SS.Sem, SS.Sec, S.Gender, COUNT(S.USN) as Student_Count
-FROM STUDENT S
-JOIN CLASS C ON S.USN = C.USN
-JOIN SEMSEC SS ON C.SSID = SS.SSID
-GROUP BY SS.Sem, SS.Sec, S.Gender
-ORDER BY SS.Sem, SS.Sec;
+select ss.sem, ss.sec, s.gender, count(s.usn) as student_count
+from student s
+join class c on s.usn = c.usn
+join semsec ss on c.ssid = ss.ssid
+group by ss.sem, ss.sec, s.gender
+order by ss.sem, ss.sec;
 ```
 
-> **💡 Optimization Tip:** If you have millions of students, ensure you have indexes on `SSID` and `USN` to make these joins snappy.
+> **💡 optimization tip:** if you have millions of students, ensure you have indexes on `ssid` and `usn` to make these joins snappy.
 
 ---
 
 ### 3. Create a view of Test1 marks of student USN ‘1BI15CS101’ in all subjects.
 
-**The Command:**
+**the command:**
 ```sql
-CREATE VIEW Student_Test1_Marks AS
-SELECT Subcode, Test1 
-FROM IAMARKS 
-WHERE USN = '1BI15CS101';
+create view student_test1_marks as
+select subcode, test1 
+from iamarks 
+where usn = '1bi15cs101';
 ```
 
 ---
 
 ### 4. Calculate the Final IA (average of best two test marks) and update the corresponding table for all students.
 
-**The Goal:** Mathematical logic inside an update.
-*Logic:* (Test1 + Test2 + Test3 - Lowest_Score) / 2
+**the goal:** mathematical logic inside an update.
+*logic:* (test1 + test2 + test3 - lowest_score) / 2
 
-**Option 1: Using `LEAST` (MySQL/PostgreSQL)**
+**option 1: using `least` (mysql/postgresql)**
 ```sql
-UPDATE IAMARKS 
-SET FinalIA = (Test1 + Test2 + Test3 - LEAST(Test1, Test2, Test3)) / 2;
+update iamarks 
+set finalia = (test1 + test2 + test3 - least(test1, test2, test3)) / 2;
 ```
 
-**Option 2: The `CASE` Statement (Universal SQL)**
-*Use this if your DB doesn't support `LEAST`.*
+**option 2: the `case` statement (universal sql)**
+*use this if your db doesn't support `least`.*
 ```sql
-UPDATE IAMARKS 
-SET FinalIA = CASE
-    WHEN Test1 <= Test2 AND Test1 <= Test3 THEN (Test2 + Test3) / 2
-    WHEN Test2 <= Test1 AND Test2 <= Test3 THEN (Test1 + Test3) / 2
-    ELSE (Test1 + Test2) / 2
-END;
+update iamarks 
+set finalia = case
+    when test1 <= test2 and test1 <= test3 then (test2 + test3) / 2
+    when test2 <= test1 and test2 <= test3 then (test1 + test3) / 2
+    else (test1 + test2) / 2
+end;
 ```
 
-> **🔥 Hot Take:** This is the most useful query in this entire PDF for actual college students. Everyone wants to know their best-of-two average!
+> **🔥 hot take:** this is the most useful query in this entire pdf for actual college students. everyone wants to know their best-of-two average!
 
 ---
 
 ### 5. List the subjects based on ascending order of their credits.
 
-**The Command:**
+**the command:**
 ```sql
-SELECT Title, Credits 
-FROM SUBJECT 
-ORDER BY Credits ASC;
+select title, credits 
+from subject 
+order by credits asc;
 ```

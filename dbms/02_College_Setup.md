@@ -1,87 +1,87 @@
 # 🎓 Program 2: College Database Setup
 
 ## 🔄 Order of Creation
-1. `STUDENT`
-2. `SEMSEC`
-3. `CLASS` (Depends on `STUDENT`, `SEMSEC`)
-4. `SUBJECT`
-5. `IAMARKS` (Depends on `STUDENT`, `SEMSEC`, `SUBJECT`)
+1. `student`
+2. `semsec`
+3. `class` (depends on `student`, `semsec`)
+4. `subject`
+5. `iamarks` (depends on `student`, `semsec`, `subject`)
 
 ## 🛠️ Table Creation
 
 ```sql
-CREATE TABLE STUDENT (
-    USN VARCHAR(20) PRIMARY KEY,
-    SName VARCHAR(100),
-    Address VARCHAR(255),
-    Phone VARCHAR(20),
-    Gender CHAR(1)
+create table student (
+    usn varchar(20) primary key,
+    sname varchar(100),
+    address varchar(255),
+    phone varchar(20),
+    gender char(1)
 );
 
-CREATE TABLE SEMSEC (
-    SSID VARCHAR(20) PRIMARY KEY,
-    Sem INT,
-    Sec CHAR(1)
+create table semsec (
+    ssid varchar(20) primary key,
+    sem int,
+    sec char(1)
 );
 
-CREATE TABLE CLASS (
-    USN VARCHAR(20),
-    SSID VARCHAR(20),
-    PRIMARY KEY (USN, SSID),
-    FOREIGN KEY (USN) REFERENCES STUDENT(USN) ON DELETE CASCADE,
-    FOREIGN KEY (SSID) REFERENCES SEMSEC(SSID) ON DELETE CASCADE
+create table class (
+    usn varchar(20),
+    ssid varchar(20),
+    primary key (usn, ssid),
+    foreign key (usn) references student(usn) on delete cascade,
+    foreign key (ssid) references semsec(ssid) on delete cascade
 );
 
-CREATE TABLE SUBJECT (
-    Subcode VARCHAR(20) PRIMARY KEY,
-    Title VARCHAR(100),
-    Sem INT,
-    Credits INT
+create table subject (
+    subcode varchar(20) primary key,
+    title varchar(100),
+    sem int,
+    credits int
 );
 
-CREATE TABLE IAMARKS (
-    USN VARCHAR(20),
-    Subcode VARCHAR(20),
-    SSID VARCHAR(20),
-    Test1 INT,
-    Test2 INT,
-    Test3 INT,
-    FinalIA DECIMAL(5, 2),
-    PRIMARY KEY (USN, Subcode, SSID),
-    FOREIGN KEY (USN) REFERENCES STUDENT(USN) ON DELETE CASCADE,
-    FOREIGN KEY (Subcode) REFERENCES SUBJECT(Subcode) ON DELETE CASCADE,
-    FOREIGN KEY (SSID) REFERENCES SEMSEC(SSID) ON DELETE CASCADE
+create table iamarks (
+    usn varchar(20),
+    subcode varchar(20),
+    ssid varchar(20),
+    test1 int,
+    test2 int,
+    test3 int,
+    finalia decimal(5, 2),
+    primary key (usn, subcode, ssid),
+    foreign key (usn) references student(usn) on delete cascade,
+    foreign key (subcode) references subject(subcode) on delete cascade,
+    foreign key (ssid) references semsec(ssid) on delete cascade
 );
 ```
 
 ## 📥 Data Insertion
 
 ```sql
--- 1. SemSec (Semester & Sections)
-INSERT INTO SEMSEC VALUES ('4C', 4, 'C');
-INSERT INTO SEMSEC VALUES ('4B', 4, 'B');
-INSERT INTO SEMSEC VALUES ('8A', 8, 'A');
+-- 1. semsec (semester & sections)
+insert into semsec values ('4c', 4, 'c');
+insert into semsec values ('4b', 4, 'b');
+insert into semsec values ('8a', 8, 'a');
 
--- 2. Students
-INSERT INTO STUDENT VALUES ('1BI15CS101', 'Alice', 'Bangalore', '9900112233', 'F');
-INSERT INTO STUDENT VALUES ('1BI15CS102', 'Bob', 'Mysore', '9900223344', 'M');
-INSERT INTO STUDENT VALUES ('1BI15CS103', 'Charlie', 'Bangalore', '9900334455', 'M');
+-- 2. students
+insert into student values ('1bi15cs101', 'alice', 'bangalore', '9900112233', 'f');
+insert into student values ('1bi15cs102', 'bob', 'mysore', '9900223344', 'm');
+insert into student values ('1bi15cs103', 'charlie', 'bangalore', '9900334455', 'm');
 
--- 3. Class (Mapping Students to SemSec)
-INSERT INTO CLASS VALUES ('1BI15CS101', '4C'); -- Alice in 4th Sem C Section
-INSERT INTO CLASS VALUES ('1BI15CS102', '4C'); -- Bob in 4th Sem C Section
-INSERT INTO CLASS VALUES ('1BI15CS103', '4B');
+-- 3. class (mapping students to semsec)
+insert into class values ('1bi15cs101', '4c'); -- alice in 4th sem c section
+insert into class values ('1bi15cs102', '4c'); -- bob in 4th sem c section
+insert into class values ('1bi15cs103', '4b');
 
--- 4. Subjects
-INSERT INTO SUBJECT VALUES ('15CS41', 'Maths', 4, 4);
-INSERT INTO SUBJECT VALUES ('15CS42', 'DBMS', 4, 4);
-INSERT INTO SUBJECT VALUES ('15CS43', 'OS', 4, 3);
+-- 4. subjects
+insert into subject values ('15cs41', 'maths', 4, 4);
+insert into subject values ('15cs42', 'dbms', 4, 4);
+insert into subject values ('15cs43', 'os', 4, 3);
 
--- 5. IAMarks
--- Alice Marks
-INSERT INTO IAMARKS VALUES ('1BI15CS101', '15CS41', '4C', 18, 15, 20, 0); 
-INSERT INTO IAMARKS VALUES ('1BI15CS101', '15CS42', '4C', 15, 18, 12, 0);
+-- 5. iamarks
+-- alice marks
+insert into iamarks values ('1bi15cs101', '15cs41', '4c', 18, 15, 20, 0); 
+insert into iamarks values ('1bi15cs101', '15cs42', '4c', 15, 18, 12, 0);
 
--- Bob Marks
-INSERT INTO IAMARKS VALUES ('1BI15CS102', '15CS41', '4C', 10, 12, 12, 0);
+-- bob marks
+insert into iamarks values ('1bi15cs102', '15cs41', '4c', 10, 12, 12, 0);
 ```

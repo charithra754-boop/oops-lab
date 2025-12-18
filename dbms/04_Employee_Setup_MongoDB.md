@@ -2,105 +2,105 @@
 
 ## 🛠️ Collection & Data Creation
 
-Copy and paste this into your MongoDB shell or Compass.
+copy and paste this into your mongodb shell or compass.
 
 ```javascript
 use employee_db
 
-// Clear existing data (optional, for fresh start)
+// clear existing data (optional, for fresh start)
 db.employee.drop()
 
-// Insert 10 Documents
-db.employee.insertMany([
+// insert 10 documents
+db.employee.insertmany([
   { 
     eid: 1, 
-    ename: "Rahul", 
-    dept: "IT", 
+    ename: "rahul", 
+    dept: "it", 
     design: "developer", 
     salary: 60000, 
     yoj: 2020, 
-    address: { dno: "101", street: "MG Road", locality: "Indiranagar", city: "Bangalore" } 
+    address: { dno: "101", street: "mg road", locality: "indiranagar", city: "bangalore" } 
   },
   { 
     eid: 2, 
-    ename: "Smith", 
-    dept: "HR", 
+    ename: "smith", 
+    dept: "hr", 
     design: "manager", 
     salary: 80000, 
     yoj: 2018, 
-    address: { dno: "202", street: "Brigade Rd", locality: "CBD", city: "Bangalore" } 
+    address: { dno: "202", street: "brigade rd", locality: "cbd", city: "bangalore" } 
   },
   { 
     eid: 3, 
-    ename: "Allen", 
-    dept: "Sales", 
+    ename: "allen", 
+    dept: "sales", 
     design: "executive", 
     salary: 30000, 
     yoj: 2021, 
-    address: { dno: "303", street: "Church St", locality: "CBD", city: "Bangalore" } 
+    address: { dno: "303", street: "church st", locality: "cbd", city: "bangalore" } 
   },
   { 
     eid: 4, 
-    ename: "Ward", 
-    dept: "IT", 
+    ename: "ward", 
+    dept: "it", 
     design: "developer", 
     salary: 55000, 
     yoj: 2019, 
-    address: { dno: "404", street: "Koramangala", locality: "4th Block", city: "Bangalore" } 
+    address: { dno: "404", street: "koramangala", locality: "4th block", city: "bangalore" } 
   },
   { 
     eid: 5, 
-    ename: "Jones", 
-    dept: "HR", 
+    ename: "jones", 
+    dept: "hr", 
     design: "manager", 
     salary: 76000, 
     yoj: 2017, 
-    address: { dno: "505", street: "Jayanagar", locality: "3rd Block", city: "Bangalore" } 
+    address: { dno: "505", street: "jayanagar", locality: "3rd block", city: "bangalore" } 
   },
   { 
     eid: 6, 
-    ename: "Martin", 
-    dept: "IT", 
+    ename: "martin", 
+    dept: "it", 
     design: "tester", 
     salary: 40000, 
     yoj: 2022, 
-    address: { dno: "606", street: "Whitefield", locality: "EPIP", city: "Bangalore" } 
+    address: { dno: "606", street: "whitefield", locality: "epip", city: "bangalore" } 
   },
   { 
     eid: 7, 
-    ename: "Blake", 
-    dept: "Sales", 
+    ename: "blake", 
+    dept: "sales", 
     design: "manager", 
     salary: 90000, 
     yoj: 2015, 
-    address: { dno: "707", street: "Malleshwaram", locality: "8th Cross", city: "Bangalore" } 
+    address: { dno: "707", street: "malleshwaram", locality: "8th cross", city: "bangalore" } 
   },
   { 
     eid: 8, 
-    ename: "Clark", 
-    dept: "IT", 
+    ename: "clark", 
+    dept: "it", 
     design: "developer", 
     salary: 70000, 
     yoj: 2018, 
-    address: { dno: "808", street: "Indiranagar", locality: "100ft Road", city: "Bangalore" } 
+    address: { dno: "808", street: "indiranagar", locality: "100ft road", city: "bangalore" } 
   },
   { 
     eid: 9, 
-    ename: "Scott", 
-    dept: "Finance", 
+    ename: "scott", 
+    dept: "finance", 
     design: "analyst", 
     salary: 65000, 
     yoj: 2019, 
-    address: { dno: "909", street: "Residency Rd", locality: "Richmond", city: "Bangalore" } 
+    address: { dno: "909", street: "residency rd", locality: "richmond", city: "bangalore" } 
   },
   { 
     eid: 10, 
-    ename: "Turner", 
-    dept: "IT", 
+    ename: "turner", 
+    dept: "it", 
     design: "developer", 
     salary: 52000, 
     yoj: 2021, 
-    address: { dno: "1010", street: "HSR Layout", locality: "Sector 1", city: "Bangalore" } 
+    address: { dno: "1010", street: "hsr layout", locality: "sector 1", city: "bangalore" } 
   }
 ]);
 ```

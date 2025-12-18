@@ -3,47 +3,47 @@
 ## Part A: Car Ownership
 
 ### 🔄 Order of Creation
-1. `PERSON`
-2. `CAR`
-3. `OWNS` (Depends on `PERSON`, `CAR`)
+1. `person`
+2. `car`
+3. `owns` (depends on `person`, `car`)
 
 ### 🛠️ Table Creation
 ```sql
-CREATE TABLE PERSON (
-    driver_id VARCHAR(20) PRIMARY KEY,
-    name VARCHAR(100),
-    address VARCHAR(255)
+create table person (
+    driver_id varchar(20) primary key,
+    name varchar(100),
+    address varchar(255)
 );
 
-CREATE TABLE CAR (
-    Regno VARCHAR(20) PRIMARY KEY,
-    model VARCHAR(50),
-    year INT
+create table car (
+    regno varchar(20) primary key,
+    model varchar(50),
+    year int
 );
 
-CREATE TABLE OWNS (
-    driver_id VARCHAR(20),
-    Regno VARCHAR(20),
-    PRIMARY KEY (driver_id, Regno),
-    FOREIGN KEY (driver_id) REFERENCES PERSON(driver_id) ON DELETE CASCADE,
-    FOREIGN KEY (Regno) REFERENCES CAR(Regno) ON DELETE CASCADE
+create table owns (
+    driver_id varchar(20),
+    regno varchar(20),
+    primary key (driver_id, regno),
+    foreign key (driver_id) references person(driver_id) on delete cascade,
+    foreign key (regno) references car(regno) on delete cascade
 );
 ```
 
 ### 📥 Data Insertion
 ```sql
-INSERT INTO PERSON VALUES ('D1', 'John', 'Bangalore');
-INSERT INTO PERSON VALUES ('D2', 'Alex', 'Mysore');
-INSERT INTO PERSON VALUES ('D3', 'Ravi', 'Bangalore');
+insert into person values ('d1', 'john', 'bangalore');
+insert into person values ('d2', 'alex', 'mysore');
+insert into person values ('d3', 'ravi', 'bangalore');
 
-INSERT INTO CAR VALUES ('KA01-1234', 'Swift', 2018);
-INSERT INTO CAR VALUES ('KA02-5678', 'Innova', 2020);
-INSERT INTO CAR VALUES ('KA03-9012', 'Honda City', 2019);
+insert into car values ('ka01-1234', 'swift', 2018);
+insert into car values ('ka02-5678', 'innova', 2020);
+insert into car values ('ka03-9012', 'honda city', 2019);
 
-INSERT INTO OWNS VALUES ('D1', 'KA01-1234'); -- John owns Swift
-INSERT INTO OWNS VALUES ('D1', 'KA02-5678'); -- John owns Innova too
-INSERT INTO OWNS VALUES ('D2', 'KA03-9012'); -- Alex owns City
--- Ravi owns nothing (useful for checking left join)
+insert into owns values ('d1', 'ka01-1234'); -- john owns swift
+insert into owns values ('d1', 'ka02-5678'); -- john owns innova too
+insert into owns values ('d2', 'ka03-9012'); -- alex owns city
+-- ravi owns nothing (useful for checking left join)
 ```
 
 ---
@@ -51,46 +51,46 @@ INSERT INTO OWNS VALUES ('D2', 'KA03-9012'); -- Alex owns City
 ## Part B: Airline Database
 
 ### 🔄 Order of Creation
-1. `AIRCRAFT`
-2. `EMPLOYEE_AIRLINE`
-3. `CERTIFIED` (Depends on `AIRCRAFT`, `EMPLOYEE_AIRLINE`)
+1. `aircraft`
+2. `employee_airline`
+3. `certified` (depends on `aircraft`, `employee_airline`)
 
 ### 🛠️ Table Creation
 ```sql
-CREATE TABLE AIRCRAFT (
-    Aircraft_ID INT PRIMARY KEY,
-    Aircraft_name VARCHAR(100),
-    Cruising_range INT
+create table aircraft (
+    aircraft_id int primary key,
+    aircraft_name varchar(100),
+    cruising_range int
 );
 
-CREATE TABLE EMPLOYEE_AIRLINE (
-    Emp_ID INT PRIMARY KEY,
-    Ename VARCHAR(100),
-    Salary DECIMAL(10, 2)
+create table employee_airline (
+    emp_id int primary key,
+    ename varchar(100),
+    salary decimal(10, 2)
 );
 
-CREATE TABLE CERTIFIED (
-    Emp_ID INT,
-    Aircraft_ID INT,
-    PRIMARY KEY (Emp_ID, Aircraft_ID),
-    FOREIGN KEY (Emp_ID) REFERENCES EMPLOYEE_AIRLINE(Emp_ID) ON DELETE CASCADE,
-    FOREIGN KEY (Aircraft_ID) REFERENCES AIRCRAFT(Aircraft_ID) ON DELETE CASCADE
+create table certified (
+    emp_id int,
+    aircraft_id int,
+    primary key (emp_id, aircraft_id),
+    foreign key (emp_id) references employee_airline(emp_id) on delete cascade,
+    foreign key (aircraft_id) references aircraft(aircraft_id) on delete cascade
 );
 ```
 
 ### 📥 Data Insertion
 ```sql
-INSERT INTO AIRCRAFT VALUES (101, 'Boeing 747', 5000);
-INSERT INTO AIRCRAFT VALUES (102, 'Airbus A320', 3000);
-INSERT INTO AIRCRAFT VALUES (103, 'Cessna', 500);
+insert into aircraft values (101, 'boeing 747', 5000);
+insert into aircraft values (102, 'airbus a320', 3000);
+insert into aircraft values (103, 'cessna', 500);
 
-INSERT INTO EMPLOYEE_AIRLINE VALUES (1, 'Pilot A', 150000);
-INSERT INTO EMPLOYEE_AIRLINE VALUES (2, 'Pilot B', 120000);
-INSERT INTO EMPLOYEE_AIRLINE VALUES (3, 'Steward C', 50000);
-INSERT INTO EMPLOYEE_AIRLINE VALUES (4, 'Pilot D', 150000); -- Tie for highest salary
+insert into employee_airline values (1, 'pilot a', 150000);
+insert into employee_airline values (2, 'pilot b', 120000);
+insert into employee_airline values (3, 'steward c', 50000);
+insert into employee_airline values (4, 'pilot d', 150000); -- tie for highest salary
 
-INSERT INTO CERTIFIED VALUES (1, 101); -- Pilot A flies Boeing
-INSERT INTO CERTIFIED VALUES (1, 102); -- Pilot A flies Airbus
-INSERT INTO CERTIFIED VALUES (2, 103); -- Pilot B flies Cessna
--- Steward C and Pilot D are not certified (useful for query #2)
+insert into certified values (1, 101); -- pilot a flies boeing
+insert into certified values (1, 102); -- pilot a flies airbus
+insert into certified values (2, 103); -- pilot b flies cessna
+-- steward c and pilot d are not certified (useful for query #2)
 ```
