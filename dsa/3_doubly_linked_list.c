@@ -1,127 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * DOUBLY LINKED LIST
- * 
- * It points forward, it points backward. It's the indecisive
- * data structure!
- * 
- * Joke: Why did the pointer break up with the variable?
- * Because there was no reference!
- */
+typedef struct Node { int data; struct Node *prev, *next; } Node;
+Node *head = NULL;
 
-struct Node {
-    int data;
-    struct Node *prev;
-    struct Node *next;
-};
-
-struct Node *head = NULL;
-
-struct Node* createNode(int data) {
-    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->prev = NULL;
-    newNode->next = NULL;
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data; newNode->prev = newNode->next = NULL;
     return newNode;
 }
 
 void insertFront(int data) {
-    struct Node *newNode = createNode(data);
-    if (head == NULL) {
-        head = newNode;
-    } else {
-        newNode->next = head;
-        head->prev = newNode;
-        head = newNode;
-    }
-    printf("Inserted %d at the front. It cuts the line!\n", data);
+    Node* newNode = createNode(data);
+    if (head) { newNode->next = head; head->prev = newNode; }
+    head = newNode;
+    printf("Inserted %d at Front. Bienvenue!\n", data);
 }
 
 void insertEnd(int data) {
-    struct Node *newNode = createNode(data);
-    if (head == NULL) {
-        head = newNode;
-    } else {
-        struct Node *temp = head;
-        while (temp->next != NULL) temp = temp->next;
-        temp->next = newNode;
-        newNode->prev = temp;
-    }
-    printf("Inserted %d at the end. Polite, waiting its turn.\n", data);
+    Node* newNode = createNode(data);
+    if (!head) { head = newNode; return; }
+    Node* temp = head;
+    while (temp->next) temp = temp->next;
+    temp->next = newNode; newNode->prev = temp;
+    printf("Inserted %d at End. Willkommen!\n", data);
 }
 
 void insertPos(int data, int pos) {
     if (pos == 1) { insertFront(data); return; }
-    
-    struct Node *newNode = createNode(data);
-    struct Node *temp = head;
-    for (int i = 1; i < pos - 1 && temp != NULL; i++) temp = temp->next;
-    
-    if (temp == NULL) {
-        printf("Position out of bounds! Are you imagining things?\n");
-    } else {
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next != NULL) temp->next->prev = newNode;
-        temp->next = newNode;
-        printf("Inserted %d at position %d. Sneaky.\n", data, pos);
-    }
+    Node* newNode = createNode(data);
+    Node* temp = head;
+    for (int i = 1; i < pos - 1 && temp; i++) temp = temp->next;
+    if (!temp) { printf("Invalid Pos! Ne?\n"); return; }
+    newNode->next = temp->next; newNode->prev = temp;
+    if (temp->next) temp->next->prev = newNode;
+    temp->next = newNode;
+    printf("Inserted %d at Pos %d. Chalo!\n", data, pos);
 }
 
 void deleteFront() {
-    if (head == NULL) { printf("List is empty!\n"); return; }
-    struct Node *temp = head;
+    if (!head) { printf("List Empty!\n"); return; }
+    Node* temp = head;
     head = head->next;
-    if (head != NULL) head->prev = NULL;
-    printf("Deleted %d from front. It was too eager.\n", temp->data);
+    if (head) head->prev = NULL;
+    printf("Deleted %d from Front. Hasta la vista!\n", temp->data);
     free(temp);
 }
 
 void deleteEnd() {
-    if (head == NULL) { printf("List is empty!\n"); return; }
-    if (head->next == NULL) { deleteFront(); return; }
-    
-    struct Node *temp = head;
-    while (temp->next != NULL) temp = temp->next;
+    if (!head) { printf("List Empty!\n"); return; }
+    if (!head->next) { deleteFront(); return; }
+    Node* temp = head;
+    while (temp->next) temp = temp->next;
     temp->prev->next = NULL;
-    printf("Deleted %d from end. The caboose is loose!\n", temp->data);
+    printf("Deleted %d from End. Arrivederci!\n", temp->data);
     free(temp);
 }
 
 void deletePos(int pos) {
-    if (head == NULL) { printf("List empty!\n"); return; }
+    if (!head) { printf("List Empty!\n"); return; }
     if (pos == 1) { deleteFront(); return; }
-    
-    struct Node *temp = head;
-    for (int i = 1; i < pos && temp != NULL; i++) temp = temp->next;
-    
-    if (temp == NULL) {
-        printf("Invalid position. You can't delete what doesn't exist!\n");
-    } else {
-        temp->prev->next = temp->next;
-        if (temp->next != NULL) temp->next->prev = temp->prev;
-        printf("Deleted %d from pos %d. Poof! Gone.\n", temp->data, pos);
-        free(temp);
-    }
+    Node* temp = head;
+    for (int i = 1; i < pos && temp; i++) temp = temp->next;
+    if (!temp) { printf("Invalid Pos!\n"); return; }
+    temp->prev->next = temp->next;
+    if (temp->next) temp->next->prev = temp->prev;
+    printf("Deleted %d from Pos %d. Annyeong!\n", temp->data, pos);
+    free(temp);
 }
 
 void display() {
-    struct Node *temp = head;
+    Node* temp = head;
     printf("List: ");
-    while (temp != NULL) {
-        printf("%d <-> ", temp->data);
-        temp = temp->next;
-    }
+    while (temp) { printf("%d <-> ", temp->data); temp = temp->next; }
     printf("NULL\n");
 }
 
 int main() {
     int ch, val, pos;
-    printf("--- Doubly Linked List of Doom ---\n");
+    printf("--- Doubly Linked List (Exam Q3) ---\n");
     while (1) {
-        printf("\n1. Ins Front\n2. Ins End\n3. Ins Pos\n4. Del Front\n5. Del End\n6. Del Pos\n7. Display\n8. Exit\nChoice: ");
+        printf("\n1.InsFront 2.InsEnd 3.InsPos 4.DelFront 5.DelEnd 6.DelPos 7.Show 8.Exit: ");
         scanf("%d", &ch);
         switch(ch) {
             case 1: printf("Val: "); scanf("%d", &val); insertFront(val); break;
@@ -132,8 +91,6 @@ int main() {
             case 6: printf("Pos: "); scanf("%d", &pos); deletePos(pos); break;
             case 7: display(); break;
             case 8: exit(0);
-            default: printf("Wrong choice.\n");
         }
     }
-    return 0;
 }
