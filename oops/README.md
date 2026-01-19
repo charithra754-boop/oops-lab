@@ -4,17 +4,21 @@ This repository contains the solution code for the Object Oriented Programming L
 
 ## 📂 Project Structure
 
+### Question Bank
+- **Question Bank PDF**: `javaqb.pdf`
+
 ### Part A
 1.  **Bank Customer System**: `MyPack` package with `BankMain.java`.
 2.  **Geometry Interface**: `Shape` interface with `Rectangle` & `Triangle` implementations.
-3.  **Advanced Math**: `AdvMath` package calculating trig functions.
-4.  **Exception Handling**: Demonstration of `try-catch-finally` with ArrayOutOfBounds.
+3.  **Advanced Math**: `AdvMath` package calculating trig functions (`MathMain.java`).
+4.  **Exception Handling**: Demonstration of `try-catch-finally` with ArrayOutOfBounds (`ExceptionDemo.java`).
+5.  **Car Dealership**: Inheritance demo with `Car` and `Truck` (`CarProgram.java`).
 
 ### Part B
 1.  **College Management**: `student` and `staff` packages with `CollegeMain.java`.
-2.  **Threading**: Prime numbers and Divisibility checks running in parallel.
-3.  **GUI**: "All The Best" display using AWT/Swing (Headless-safe).
-4.  **JDBC**: Database connection demo (requires MySQL driver).
+2.  **Threading**: Prime numbers and Divisibility checks running in parallel (`ThreadDemo.java`).
+3.  **GUI**: "All The Best" display using AWT/Swing (`AllTheBest.java`).
+4.  **JDBC**: Database connection demo (`JdbcDemo.java`).
 
 ## 🚀 How to Run
 
@@ -29,6 +33,7 @@ java BankMain
 java AreaMain
 java MathMain
 java ExceptionDemo
+java CarProgram
 java CollegeMain
 java ThreadDemo
 java AllTheBest

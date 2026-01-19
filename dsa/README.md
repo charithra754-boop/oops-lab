@@ -10,12 +10,14 @@ This directory contains C implementations of various Data Structures and Algorit
 4.  **Binary Search Tree**: BST creation and operations (`4_bst.c`).
 5.  **Tree Traversal**: Inorder, Preorder, Postorder traversals (`5_tree_traversal.c`).
 6.  **Static Hashing**: Hashing techniques (`6_static_hashing.c`).
+7.  **Two Stacks (Array)**: Implementation of two stacks in a single array (`mstacks.c`).
 
 ## 📚 Resources
 
 - **GUIDE.md**: Detailed guide for the programs.
 - **VIVA_QUESTIONS.md**: Common viva questions for these topics.
 - **EDGE_CASES.md**: Edge cases to consider while testing.
+- **minimal_fun/**: A collection of simplified, fun implementations.
 
 ## 🚀 How to Compile and Run
 
