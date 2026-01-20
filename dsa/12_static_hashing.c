@@ -5,9 +5,7 @@
 
 int hashTable[TABLE_SIZE];
 
-void init() {
-    for(int i=0; i<TABLE_SIZE; i++) hashTable[i] = -1; // -1 indicates empty
-}
+
 
 void insert() {
     int val, key, index, i;
@@ -54,7 +52,8 @@ void display() {
 
 int main() {
     int choice;
-    init();
+    // Initialize hash table slots to -1 (indicating empty)
+    for(int i=0; i<TABLE_SIZE; i++) hashTable[i] = -1;
     
     while(1) {
         printf("\nHash Table (Static Hashing) Menu:\n1. Insert\n2. Search\n3. Display\n4. Exit\nChoice: ");

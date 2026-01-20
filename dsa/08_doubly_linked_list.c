@@ -10,13 +10,24 @@ typedef struct Node {
 
 Node *head = NULL;
 
-void insert_begin() {
+Node *createnode(int data) {
     Node *newNode = (Node*)malloc(sizeof(Node));
-    if(!newNode) return;
-    
-    printf("Enter value: ");
-    scanf("%d", &newNode->data);
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    newNode->data = data;
     newNode->prev = NULL;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insert_begin() {
+    int data;
+    printf("Enter value: ");
+    scanf("%d", &data);
+    Node *newNode = createnode(data);
+    
     newNode->next = head;
     
     if (head != NULL) head->prev = newNode;
@@ -25,15 +36,12 @@ void insert_begin() {
 }
 
 void insert_end() {
-    Node *newNode = (Node*)malloc(sizeof(Node));
-    if(!newNode) return;
-    
+    int data;
     printf("Enter value: ");
-    scanf("%d", &newNode->data);
-    newNode->next = NULL;
+    scanf("%d", &data);
+    Node *newNode = createnode(data);
     
     if (head == NULL) {
-        newNode->prev = NULL;
         head = newNode;
     } else {
         Node *temp = head;
@@ -49,12 +57,12 @@ void delete_begin() {
         printf("List Empty.\n");
         return;
     }
-    Node *ptr = head;
+    Node *temp = head;
     head = head->next;
     if (head != NULL) head->prev = NULL;
     
-    printf("Deleted %d\n", ptr->data);
-    free(ptr);
+    printf("Deleted %d\n", temp->data);
+    free(temp);
 }
 
 void delete_end() {
@@ -62,27 +70,27 @@ void delete_end() {
         printf("List Empty.\n");
         return;
     }
-    Node *ptr = head;
-    if (ptr->next == NULL) { // Only one node
+    Node *temp = head;
+    if (temp->next == NULL) { // Only one node
         head = NULL;
-        printf("Deleted %d\n", ptr->data);
-        free(ptr);
+        printf("Deleted %d\n", temp->data);
+        free(temp);
     } else {
-        while (ptr->next != NULL) ptr = ptr->next;
-        ptr->prev->next = NULL;
-        printf("Deleted %d\n", ptr->data);
-        free(ptr);
+        while (temp->next != NULL) temp = temp->next;
+        temp->prev->next = NULL;
+        printf("Deleted %d\n", temp->data);
+        free(temp);
     }
 }
 
 void display() {
-    Node *ptr = head;
-    if (ptr == NULL) printf("List Empty.\n");
+    Node *temp = head;
+    if (temp == NULL) printf("List Empty.\n");
     else {
         printf("List: ");
-        while (ptr != NULL) {
-            printf("%d <-> ", ptr->data);
-            ptr = ptr->next;
+        while (temp != NULL) {
+            printf("%d <-> ", temp->data);
+            temp = temp->next;
         }
         printf("NULL\n");
     }

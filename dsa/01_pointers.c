@@ -33,5 +33,19 @@ int main() {
     ptr--;
     printf("ptr after decrement (ptr--): %p\n", ptr);
 
+    printf("\nPointers and Arrays:\n");
+    printf("--------------------\n");
+    int arr[] = {10, 20, 30, 40, 50};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int sum = 0;
+    int *arrPtr = arr; // Point to the start of the array
+
+    printf("Array elements: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", *(arrPtr + i)); // Accessing array elements using pointer arithmetic
+        sum += *(arrPtr + i);
+    }
+    printf("\nSum of array elements using pointer: %d\n", sum);
+
     return 0;
 }
