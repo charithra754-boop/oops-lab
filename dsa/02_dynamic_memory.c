@@ -1,87 +1,67 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // Required for malloc, calloc, realloc, free
 
 int main() {
-    int *arr;
-    int n, i;
+    int *ptr_m, *ptr_c;
+    int num_elements = 3; // Initial small size for malloc
+    int new_num_elements = 5; // New size for realloc
 
-    printf("Dynamic Memory Allocation Demo\n");
-    printf("------------------------------\n");
+    printf("--- Simple Malloc & Realloc Demo ---\n");
+    // Malloc: Allocate memory for 3 integers
+    ptr_m = (int*)malloc(num_elements * sizeof(int));
 
-    // 1. MALLOC: Allocate memory for 'n' integers
-    printf("Enter number of elements for malloc: ");
-    scanf("%d", &n);
-
-    // allocate memory using malloc (memory is uninitialized)
-    arr = (int*)malloc(n * sizeof(int));
-
-    if (arr == NULL) {
-        printf("Memory allocation failed!\n");
+    if (ptr_m == NULL) {
+        printf("Malloc failed!\n");
         return 1;
     }
 
-    // Initialize and display elements
-    printf("Enter %d elements:\n", n);
-    for(i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-
-    printf("Elements in array (malloc): ");
-    for(i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+    printf("Malloc: Allocated for %d ints. Initializing with 1, 2, 3.\n", num_elements);
+    for (int i = 0; i < num_elements; i++) {
+        ptr_m[i] = i + 1;
+        printf("%d ", ptr_m[i]);
     }
     printf("\n");
 
-    // 2. REALLOC: Resize the memory block
-    int new_n;
-    printf("\nEnter new size for realloc: ");
-    scanf("%d", &new_n);
+    // Realloc: Resize the memory block
+    // It will expand the array to hold 5 integers
+    ptr_m = (int*)realloc(ptr_m, new_num_elements * sizeof(int));
 
-    // Resize memory using realloc
-    arr = (int*)realloc(arr, new_n * sizeof(int));
-
-    if (arr == NULL) {
-        printf("Memory reallocation failed!\n");
+    if (ptr_m == NULL) {
+        printf("Realloc failed!\n");
         return 1;
     }
 
-    // If new size is larger, initialize new elements
-    if (new_n > n) {
-        printf("Enter %d more elements:\n", new_n - n);
-        for(i = n; i < new_n; i++) {
-            scanf("%d", &arr[i]);
-        }
-    }
-
-    printf("Elements in array (realloc): ");
-    for(i = 0; i < new_n; i++) {
-        printf("%d ", arr[i]);
+    printf("Realloc: Resized to %d ints. Existing values preserved, new ones uninitialized (garbage).\n", new_num_elements);
+    printf("Realloc: Content after resizing:\n");
+    for (int i = 0; i < new_num_elements; i++) {
+        printf("%d ", ptr_m[i]); // Shows old values + new garbage
     }
     printf("\n");
+    
+    // Free malloc'd/realloc'd memory
+    free(ptr_m);
+    printf("Memory freed after malloc/realloc.\n");
+    printf("\n----------------------------------\n");
 
-    // 3. FREE: Deallocate memory
-    free(arr);
-    printf("\nMemory freed successfully using free().\n");
-    
-    // 4. CALLOC: Allocate and zero-initialize memory
-    printf("\nDemonstrating calloc (allocates and initializes to 0):\n");
-    printf("Enter number of elements for calloc: ");
-    scanf("%d", &n);
-    
-    arr = (int*)calloc(n, sizeof(int));
-    
-     if (arr == NULL) {
-        printf("Memory allocation failed!\n");
+    printf("--- Simple Calloc Demo ---\n");
+    // Calloc: Allocate memory for 5 integers and initialize all to zero
+    ptr_c = (int*)calloc(num_elements, sizeof(int)); // Using original num_elements for simplicity
+
+    if (ptr_c == NULL) {
+        printf("Calloc failed!\n");
         return 1;
     }
 
-    printf("Elements in array (calloc - should be all 0): ");
-    for(i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+    printf("Calloc: Allocated for %d ints. Automatically zero-initialized:\n", num_elements);
+    for (int i = 0; i < num_elements; i++) {
+        printf("%d ", ptr_c[i]); // Will print 0s
     }
     printf("\n");
-    
-    free(arr);
+
+    // Free calloc'd memory
+    free(ptr_c);
+    printf("Memory freed after calloc.\n");
+    printf("\n--------------------------\n");
 
     return 0;
 }

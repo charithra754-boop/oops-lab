@@ -1,104 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+// typedef allows using 'Node' instead of 'struct Node'
+typedef struct Node {
     int data;
     struct Node *prev;
     struct Node *next;
-};
+} Node;
 
-struct Node *head = NULL;
+Node *head = NULL;
 
 void insert_begin() {
-    int val;
-    struct Node *ptr;
-    ptr = (struct Node *)malloc(sizeof(struct Node));
-    if (ptr == NULL) {
-        printf("Memory not available\n");
-        return;
-    }
-    printf("Enter value to insert at beginning: ");
-    scanf("%d", &val);
-    ptr->data = val;
-    ptr->prev = NULL;
-    ptr->next = head;
+    Node *newNode = (Node*)malloc(sizeof(Node));
+    if(!newNode) return;
     
-    if (head != NULL) {
-        head->prev = ptr;
-    }
-    head = ptr;
-    printf("%d inserted at beginning.\n", val);
+    printf("Enter value: ");
+    scanf("%d", &newNode->data);
+    newNode->prev = NULL;
+    newNode->next = head;
+    
+    if (head != NULL) head->prev = newNode;
+    head = newNode;
+    printf("Inserted %d at begin.\n", newNode->data);
 }
 
 void insert_end() {
-    int val;
-    struct Node *ptr, *temp;
-    ptr = (struct Node *)malloc(sizeof(struct Node));
-    if (ptr == NULL) {
-        printf("Memory not available\n");
-        return;
-    }
-    printf("Enter value to insert at end: ");
-    scanf("%d", &val);
-    ptr->data = val;
-    ptr->next = NULL;
+    Node *newNode = (Node*)malloc(sizeof(Node));
+    if(!newNode) return;
+    
+    printf("Enter value: ");
+    scanf("%d", &newNode->data);
+    newNode->next = NULL;
     
     if (head == NULL) {
-        ptr->prev = NULL;
-        head = ptr;
+        newNode->prev = NULL;
+        head = newNode;
     } else {
-        temp = head;
-        while (temp->next != NULL) {
-            temp = temp->next;
-        }
-        temp->next = ptr;
-        ptr->prev = temp;
+        Node *temp = head;
+        while (temp->next != NULL) temp = temp->next;
+        temp->next = newNode;
+        newNode->prev = temp;
     }
-    printf("%d inserted at end.\n", val);
+    printf("Inserted %d at end.\n", newNode->data);
 }
 
 void delete_begin() {
-    struct Node *ptr;
     if (head == NULL) {
-        printf("List is empty.\n");
-    } else {
-        ptr = head;
-        head = head->next;
-        if (head != NULL) {
-            head->prev = NULL;
-        }
-        printf("Deleted element: %d\n", ptr->data);
-        free(ptr);
+        printf("List Empty.\n");
+        return;
     }
+    Node *ptr = head;
+    head = head->next;
+    if (head != NULL) head->prev = NULL;
+    
+    printf("Deleted %d\n", ptr->data);
+    free(ptr);
 }
 
 void delete_end() {
-    struct Node *ptr, *temp;
     if (head == NULL) {
-        printf("List is empty.\n");
-    } else if (head->next == NULL) {
-        printf("Deleted element: %d\n", head->data);
-        free(head);
+        printf("List Empty.\n");
+        return;
+    }
+    Node *ptr = head;
+    if (ptr->next == NULL) { // Only one node
         head = NULL;
+        printf("Deleted %d\n", ptr->data);
+        free(ptr);
     } else {
-        temp = head;
-        while (temp->next != NULL) {
-            temp = temp->next;
-        }
-        ptr = temp;
-        temp->prev->next = NULL;
-        printf("Deleted element: %d\n", ptr->data);
+        while (ptr->next != NULL) ptr = ptr->next;
+        ptr->prev->next = NULL;
+        printf("Deleted %d\n", ptr->data);
         free(ptr);
     }
 }
 
 void display() {
-    struct Node *ptr;
-    if (head == NULL) {
-        printf("List is empty.\n");
-    } else {
-        ptr = head;
-        printf("List elements: ");
+    Node *ptr = head;
+    if (ptr == NULL) printf("List Empty.\n");
+    else {
+        printf("List: ");
         while (ptr != NULL) {
             printf("%d <-> ", ptr->data);
             ptr = ptr->next;
@@ -108,26 +89,17 @@ void display() {
 }
 
 int main() {
-    int choice;
+    int ch;
     while(1) {
-        printf("\nDoubly Linked List Menu:\n");
-        printf("1. Insert at Beginning\n");
-        printf("2. Insert at End\n");
-        printf("3. Delete from Beginning\n");
-        printf("4. Delete from End\n");
-        printf("5. Display\n");
-        printf("6. Exit\n");
-        printf("Enter choice: ");
-        scanf("%d", &choice);
-        
-        switch(choice) {
+        printf("\nDLL Menu:\n1.Ins Begin\n2.Ins End\n3.Del Begin\n4.Del End\n5.Display\n6.Exit\nChoice: ");
+        scanf("%d", &ch);
+        switch(ch) {
             case 1: insert_begin(); break;
             case 2: insert_end(); break;
             case 3: delete_begin(); break;
             case 4: delete_end(); break;
             case 5: display(); break;
             case 6: exit(0);
-            default: printf("Invalid choice.\n");
         }
     }
     return 0;

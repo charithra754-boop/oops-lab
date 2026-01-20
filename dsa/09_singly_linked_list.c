@@ -1,85 +1,80 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+typedef struct Node {
     int data;
     struct Node *next;
-};
+} Node;
 
-struct Node *head = NULL;
+Node *head = NULL;
 
 void insert_begin() {
-    int val;
-    struct Node *ptr = (struct Node*)malloc(sizeof(struct Node));
+    Node *newNode = (Node*)malloc(sizeof(Node));
     printf("Enter value: ");
-    scanf("%d", &val);
-    ptr->data = val;
-    ptr->next = head;
-    head = ptr;
-    printf("%d inserted at beginning.\n", val);
+    scanf("%d", &newNode->data);
+    newNode->next = head;
+    head = newNode;
+    printf("Inserted %d at begin.\n", newNode->data);
 }
 
 void insert_end() {
-    int val;
-    struct Node *ptr = (struct Node*)malloc(sizeof(struct Node));
-    struct Node *temp = head;
+    Node *newNode = (Node*)malloc(sizeof(Node));
     printf("Enter value: ");
-    scanf("%d", &val);
-    ptr->data = val;
-    ptr->next = NULL;
+    scanf("%d", &newNode->data);
+    newNode->next = NULL;
     
-    if (head == NULL) head = ptr;
+    if (head == NULL) head = newNode;
     else {
+        Node *temp = head;
         while(temp->next != NULL) temp = temp->next;
-        temp->next = ptr;
+        temp->next = newNode;
     }
-    printf("%d inserted at end.\n", val);
+    printf("Inserted %d at end.\n", newNode->data);
 }
 
 void insert_pos() {
-    int val, pos, i;
-    struct Node *ptr = (struct Node*)malloc(sizeof(struct Node));
-    struct Node *temp = head;
-    printf("Enter position (1-based): ");
+    int pos, i;
+    printf("Enter pos (1-based) & value: ");
     scanf("%d", &pos);
-    printf("Enter value: ");
-    scanf("%d", &val);
-    ptr->data = val;
+    
+    Node *newNode = (Node*)malloc(sizeof(Node));
+    scanf("%d", &newNode->data);
 
     if (pos == 1) {
-        ptr->next = head;
-        head = ptr;
+        newNode->next = head;
+        head = newNode;
     } else {
-        for(i=1; i<pos-1; i++) {
-            if(temp == NULL) { printf("Position out of range.\n"); return; }
-            temp = temp->next;
+        Node *temp = head;
+        for(i=1; i<pos-1 && temp!=NULL; i++) temp = temp->next;
+        
+        if(temp == NULL) printf("Invalid pos.\n");
+        else {
+            newNode->next = temp->next;
+            temp->next = newNode;
         }
-        ptr->next = temp->next;
-        temp->next = ptr;
     }
-    printf("%d inserted at pos %d.\n", val, pos);
 }
 
 void delete_begin() {
-    if (head == NULL) printf("List Empty.\n");
+    if (head == NULL) printf("Empty.\n");
     else {
-        struct Node *ptr = head;
+        Node *ptr = head;
         head = head->next;
-        printf("Deleted: %d\n", ptr->data);
+        printf("Deleted %d\n", ptr->data);
         free(ptr);
     }
 }
 
 void delete_end() {
-    if (head == NULL) printf("List Empty.\n");
+    if (head == NULL) printf("Empty.\n");
     else if (head->next == NULL) {
-        printf("Deleted: %d\n", head->data);
+        printf("Deleted %d\n", head->data);
         free(head);
         head = NULL;
     } else {
-        struct Node *temp = head;
+        Node *temp = head;
         while(temp->next->next != NULL) temp = temp->next;
-        printf("Deleted: %d\n", temp->next->data);
+        printf("Deleted %d\n", temp->next->data);
         free(temp->next);
         temp->next = NULL;
     }
@@ -87,47 +82,43 @@ void delete_end() {
 
 void delete_pos() {
     int pos, i;
-    if (head == NULL) { printf("List Empty.\n"); return; }
-    printf("Enter position (1-based): ");
+    if (head == NULL) { printf("Empty.\n"); return; }
+    printf("Enter pos: ");
     scanf("%d", &pos);
     
     if (pos == 1) {
-        struct Node *ptr = head;
+        Node *ptr = head;
         head = head->next;
-        printf("Deleted: %d\n", ptr->data);
+        printf("Deleted %d\n", ptr->data);
         free(ptr);
     } else {
-        struct Node *temp = head;
-        struct Node *ptr;
-        for(i=1; i<pos-1; i++) {
-            if(temp->next == NULL) { printf("Position out of range.\n"); return; }
-            temp = temp->next;
+        Node *temp = head;
+        for(i=1; i<pos-1 && temp->next!=NULL; i++) temp = temp->next;
+        
+        if(temp->next == NULL) printf("Invalid pos.\n");
+        else {
+            Node *ptr = temp->next;
+            temp->next = ptr->next;
+            printf("Deleted %d\n", ptr->data);
+            free(ptr);
         }
-        if(temp->next == NULL) { printf("Position out of range.\n"); return; }
-        ptr = temp->next;
-        temp->next = ptr->next;
-        printf("Deleted: %d\n", ptr->data);
-        free(ptr);
     }
 }
 
 void display() {
-    struct Node *temp = head;
-    if(temp == NULL) printf("List is Empty.\n");
-    else {
-        printf("Elements: ");
-        while(temp != NULL) {
-            printf("%d -> ", temp->data);
-            temp = temp->next;
-        }
-        printf("NULL\n");
+    Node *temp = head;
+    printf("List: ");
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
     }
+    printf("NULL\n");
 }
 
 int main() {
     int ch;
     while(1) {
-        printf("\nSLL Menu:\n1.Ins Begin\n2.Ins End\n3.Ins Pos\n4.Del Begin\n5.Del End\n6.Del Pos\n7.Display\n8.Exit\nChoice: ");
+        printf("\nSLL Menu: 1.InsBeg 2.InsEnd 3.InsPos 4.DelBeg 5.DelEnd 6.DelPos 7.Show 8.Exit\nChoice: ");
         scanf("%d", &ch);
         switch(ch) {
             case 1: insert_begin(); break;
@@ -138,7 +129,6 @@ int main() {
             case 6: delete_pos(); break;
             case 7: display(); break;
             case 8: exit(0);
-            default: printf("Invalid\n");
         }
     }
     return 0;
