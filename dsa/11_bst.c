@@ -1,62 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+typedef struct Node {
     int data;
     struct Node *left, *right;
-};
+} Node;
 
-struct Node* createNode(int val) {
-    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
-    node->data = val;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
-
-struct Node* insert(struct Node* root, int val) {
-    if (root == NULL) return createNode(val);
+Node* insert(Node* root, int val) {
+    if (root == NULL) {
+        Node* newNode = (Node*)malloc(sizeof(Node));
+        newNode->data = val;
+        newNode->left = newNode->right = NULL;
+        return newNode;
+    }
     if (val < root->data) root->left = insert(root->left, val);
     else if (val > root->data) root->right = insert(root->right, val);
     return root;
 }
 
-struct Node* search(struct Node* root, int val) {
+Node* search(Node* root, int val) {
     if (root == NULL || root->data == val) return root;
     if (val < root->data) return search(root->left, val);
     return search(root->right, val);
 }
 
-struct Node* findMin(struct Node* root) {
+Node* findMin(Node* root) {
     while (root->left != NULL) root = root->left;
     return root;
 }
 
-struct Node* deleteNode(struct Node* root, int val) {
+Node* deleteNode(Node* root, int val) {
     if (root == NULL) return root;
+    
     if (val < root->data) root->left = deleteNode(root->left, val);
     else if (val > root->data) root->right = deleteNode(root->right, val);
     else {
-        // Node with one child or no child
+        // Node found
         if (root->left == NULL) {
-            struct Node* temp = root->right;
+            Node* temp = root->right;
             free(root);
             return temp;
         } else if (root->right == NULL) {
-            struct Node* temp = root->left;
+            Node* temp = root->left;
             free(root);
             return temp;
         }
-        // Node with two children: Get inorder successor (smallest in right subtree)
-        struct Node* temp = findMin(root->right);
+        // Two children: Get inorder successor (min in right subtree)
+        Node* temp = findMin(root->right);
         root->data = temp->data;
         root->right = deleteNode(root->right, temp->data);
     }
     return root;
 }
 
-void inorder(struct Node* root) {
-    if (root != NULL) {
+void inorder(Node* root) {
+    if (root) {
         inorder(root->left);
         printf("%d ", root->data);
         inorder(root->right);
@@ -64,37 +62,31 @@ void inorder(struct Node* root) {
 }
 
 int main() {
-    struct Node* root = NULL;
+    Node* root = NULL;
     int choice, val;
     
     while(1) {
-        printf("\nBST Menu:\n1. Insert\n2. Search\n3. Delete\n4. Display (Inorder)\n5. Exit\nChoice: ");
+        printf("\nBST Menu: 1.Insert 2.Search 3.Delete 4.Inorder 5.Exit\nChoice: ");
         scanf("%d", &choice);
         
         switch(choice) {
             case 1: 
-                printf("Enter value: ");
-                scanf("%d", &val);
+                printf("Value: "); scanf("%d", &val);
                 root = insert(root, val);
                 break;
             case 2:
-                printf("Enter value to search: ");
-                scanf("%d", &val);
-                if (search(root, val) != NULL) printf("Found %d\n", val);
+                printf("Search Value: "); scanf("%d", &val);
+                if (search(root, val)) printf("Found\n");
                 else printf("Not Found\n");
                 break;
             case 3:
-                printf("Enter value to delete: ");
-                scanf("%d", &val);
+                printf("Delete Value: "); scanf("%d", &val);
                 root = deleteNode(root, val);
                 break;
             case 4:
-                printf("BST Inorder: ");
-                inorder(root);
-                printf("\n");
+                printf("Tree: "); inorder(root); printf("\n");
                 break;
             case 5: exit(0);
-            default: printf("Invalid\n");
         }
     }
     return 0;

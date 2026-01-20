@@ -1,33 +1,27 @@
 #include <stdio.h>
 
-// Define a structure to hold student details
-struct Student {
+// typedef makes the code cleaner: 'Student' instead of 'struct Student'
+typedef struct {
     int id;
     char name[50];
     float marks;
-};
+} Student;
 
 int main() {
-    struct Student s;
+    Student s; // No 'struct' keyword needed now
 
-    printf("Structure Demo (Student Management)\n");
-    printf("-----------------------------------\n");
-
-    // Read student details from user
-    printf("Enter Student ID: ");
+    printf("Structure Demo\n");
+    
+    printf("Enter ID: ");
     scanf("%d", &s.id);
     
-    printf("Enter Student Name: ");
-    scanf("%s", s.name); // Simple string input
+    printf("Enter Name: ");
+    scanf("%s", s.name);
     
-    printf("Enter Student Marks: ");
+    printf("Enter Marks: ");
     scanf("%f", &s.marks);
 
-    // Display the details
-    printf("\nStudent Details Display:\n");
-    printf("ID: %d\n", s.id);
-    printf("Name: %s\n", s.name);
-    printf("Marks: %.2f\n", s.marks);
+    printf("\nDetails: ID:%d | Name:%s | Marks:%.2f\n", s.id, s.name, s.marks);
 
     return 0;
 }
